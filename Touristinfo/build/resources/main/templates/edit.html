@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Attraction</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <meta charset="utf-8" />
+</head>
+<body>
+<section>
+    <form id="add" th:method="post" th:action="@{/edit/{id} (id = ${editAttraction.id})}">
+        <fieldset class="text-input">
+            <div>
+                <label for="attractionName">Name: </label>
+                <input type="text" id="attractionName" name="attractionName" required
+                       th:field="${editAttraction.attrName}" th:value="${editAttraction.attrName}">
+            </div>
+
+a
+            <div>
+                <label for="city">City: </label>
+                <input type="text" id="city" name="city" required th:field="${editAttraction.city}"
+                       th:value="*{editAttraction.city}">
+            </div>
+
+
+            <div>
+                <label for="price">Price: </label>
+                <input type="number" th:value="${editAttraction.price}" id="price" name="price" required/>
+            </div>
+
+            <div>
+                <label for="longitude">Longitude: </label>
+                <input type="number" th:value="${editAttraction.longitude}" id="longitude" name="longitude" required/>
+            </div>
+
+            <div>
+                <label for="latitude">Latitude: </label>
+                <input type="number" th:value="${editAttraction.latitude}" id="latitude" name="latitude" required/>
+            </div>
+
+            <div>
+                <label for="category">Category: </label>
+                <input type="text" id="category" name="category" required th:field="${editAttraction.category}"
+                       th:value="${editAttraction.category}">
+            </div>
+
+            <div>
+                <label for="duration">Duration: </label>
+                <input type="number" th:value="${editAttraction.duration}" id="duration" name="duration" required/>
+            </div>
+
+            <div>
+                <label for="recommendedAge">Recommended age: </label>
+                <input type="number" th:value="${editAttraction.recommendedAge}" id="recommendedAge"
+                       name="recommendedAge" required/>
+            </div>
+
+            <input type="submit" value="Submit"/>
+        </fieldset>
+    </form>
+</section>
+</body>
+</html>

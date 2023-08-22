@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Attractions</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<h1>Attractions</h1>
+
+
+
+<table border="1" class="table table-striped table-responsive-md">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Price</th>
+        <th>Longitude</th>
+        <th>Latitude</th>
+        <th>Category</th>
+        <th>Duration</th>
+        <th>Recommended age</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="attraction : ${listOfAttraction}" th:object="${attraction}">
+        <td><a th:href="@{/edit/{id} (id = *{id})}" th:text="*{attrName}"></a></td>
+        <td th:text="*{city}"></td>
+        <td th:text="*{price}"></td>
+        <td th:text="*{longitude}"></td>
+        <td th:text="*{latitude}"></td>
+        <td th:text="*{category}"></td>
+        <td th:text="*{duration}"></td>
+        <td th:text="*{recommendedAge}"></td>
+        <!-- <td><a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger">Delete</a>
+            </td> -->
+    </tr>
+    </tbody>
+
+</table>
+<br>
+<form class=class="form-row-align-items-center" th:action="@{/add}" th:method="POST">
+    <label for="attractionName">Attraction name</label>
+    <input class="form-control.col-md-" type="text" name="attractionName" id="attractionName" required="required">
+    <label for="city">City</label>
+    <input class="form-control.col-md-" type="text" name="city" id="city"required="required">
+    <label for="price">Price</label>
+    <input class="form-control.col-md-" type="number" name="price" id="price" required="required">
+    <label for="longitude">Longitude</label>
+    <input class="form-control.col-md-" type="number" name="longitude" id="longitude" step="0.0001"  required="required">
+    <label for="latitude">Latitude</label>
+    <input class="form-control.col-md-" type="number" name="latitude" id="latitude" step="0.0001" required="required">
+    <label for="category">Category</label>
+    <input class="form-control.col-md-" type="number" name="category" id="category" step="0.0001" required="required">
+    <label for="recommendedAge">Recommended Age</label>
+    <input class="form-control.col-md-" type="text" name="recommendedAge" id="recommendedAge"  required="required">
+    <label for="duration">Duration</label>
+    <input class="form-control.col-md-" type="number" name="duration" id="duration"  required="required">
+    <button class="btn btn-primary" type="submit">Submit</button>
+<br>
+
+    <fieldset class="text-input">
+        <form th:action="@{/tickets/reserve}" th:method="POST">
+
+            <div>
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" required
+                       th:field="${newTicket.reserveName}"
+                       th:value="${newTicket.reserveName}">
+            </div>
+
+            <div>
+                <label for="quantity">Quantity</label>
+                <input type="number" th:value="${newTicket.quantity}" id="quantity" name="quantity"
+                       required/>
+            </div>
+
+            <select name="attractionId" id="attraction">
+                <label for="attraction">Attraction</label>
+                <option th:default>Select attraction</option>
+                <option th:each="attraction : ${attractions}" th:value="${attraction.id}"
+                        th:text="${attraction.attrName}">
+                </option>
+            </select>
+
+            <button type="submit">Submit</button>
+
+        </form>
+    </fieldset>
+    </section>
+
+</form>
+</body>
+</html>
