@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://java.sun.com/xml/ns/persistence/orm">
+<head>
+    <meta charset="UTF-8">
+    <title>My Garden</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+
+<th:block th:insert="Fragments :: header"></th:block>
+<h2 th:if="${shopitems.size() == 0}">No item's found</h2>
+<th:block th:insert="Fragments :: search"></th:block>
+    <table th:unless="${shopitems.size() == 0}">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity of stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="shopitem: ${shopitems}" th:object="${shopitem}">
+                <td th:text="*{name}"></td>
+                <td th:text="*{description}"></td>
+                <td id="price" th:text="${shopitem.price}+' Ft'"></td>
+                <td id="quantity" th:text="*{quantityOfStock}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
