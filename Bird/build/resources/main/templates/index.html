@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Birdhouse</title>
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(#e66465, #9198e5);
+    }
+
+    table {
+      width: 50vw;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    input {
+      box-sizing: border-box;
+      padding: 6px;
+      height: 100%;
+      font-size: 1.2rem;
+    }
+
+    #birds {
+      border-spacing: 0px;
+    }
+
+    #add {
+      width: 50vw;
+      margin-bottom: 2rem;
+    }
+
+    table > caption {
+      font-size: 2rem;
+      font-weight: 800;
+      padding: 20px;
+    }
+
+    thead, tfoot {
+      font-size: 1.2rem;
+    }
+
+    table, th, td {
+      border: 1px solid #000;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    #birds tr:hover td {
+      cursor: pointer;
+      background-color: #9198e5;
+      color: #fff;
+      transition: all 0.25s;
+    }
+  </style>
+
+</head>
+<body>
+<table id="birds">
+  <caption>Birdhouse</caption>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Can fly</th>
+    <th>Average weight</th>
+    <th>Nest</th>
+    <th>Update</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="bird : ${birds}" th:object="${bird}">
+    <td th:text="*{name}"></td>
+    <td th:text="*{canFly}"></td>
+    <td th:text="*{weight}"></td>
+    <td th:text="*{nest} != null ? *{nest.name} : 'No nest'"></td>
+    <td>
+      <a th:href="@{/update/{id} (id = *{id})}" >Update</a>
+    </td>
+    <td>
+      <form th:method="delete" th:action="@{/delete/{id} (id = *{id})}">
+        <input type="submit" value="Remove">
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<section>
+  <form id="add" method="post" th:action="@{/}">
+    <div>
+      <label for="name">Name: </label>
+      <input type="text" id="name" name="name" />
+    </div>
+
+    <div>
+      <label for="canFly">Can fly: </label>
+      <input type="checkbox" id="canFly" name="canFly"  />
+    </div>
+
+    <div>
+      <label for="weight">Average weight: </label>
+      <input type="number" id="weight" name="weight" min="0" max="250000" step="1" />
+    </div>
+
+    <input type="submit" value="Add" />
+  </form>
+</section>
+</body>
+</html></html>
