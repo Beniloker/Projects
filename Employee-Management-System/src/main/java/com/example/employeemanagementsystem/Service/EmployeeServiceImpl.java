@@ -2,12 +2,8 @@ package com.example.employeemanagementsystem.Service;
 
 import com.example.employeemanagementsystem.Model.Employee;
 import com.example.employeemanagementsystem.Repository.EmployeeRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
