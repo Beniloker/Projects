@@ -9,7 +9,7 @@ export default function Home() {
         </Head>
         <Navbar/>
         <main>
-            <h1 className="text-center text-gray-600 font-semibold text-4xl py-10 bg-gray-300 border-gray-800 rounded-xl shadow-2xl">Welcome to Personal Financing
+            <h1 className="text-center text-gray-600 font-semibold text-4xl py-10 bg-gray-300 border-gray-800 rounded-xl shadow-2xl">Personal Financing
                 Platform</h1>
             <div className="px-20 place-content-center my-4 mx-2">
                 <div className="flex px-14 py-16 items-center border-2 border-opacity-50 border-lime-800 rounded-xl bg-green-400 shadow-2xl">
@@ -114,14 +114,8 @@ export default function Home() {
                 </div>
             </div>
         <div className="bg-gray-800">
-            <h2 className="text-center text-amber-200 font-semibold text-2xl py-6">Developer who contribute on this
-                project:</h2>
-            <p className="text-center text-red-500 font-semibold text-xl py-4">Head of team: Bela Riboczki,</p>
-            <p className="text-center text-gray-400 font-semibold py-1">Team member: Viktor Benedek,</p>
-            <p className="text-center text-gray-400 font-semibold py-1">Team member: Erik Nagyfalusy,</p>
-            <p className="text-center text-gray-400 font-semibold py-1">Team member: Levente Ács,</p>
-            <p className="text-center text-gray-400 font-semibold py-1">Team member: Matej Thomka,</p>
-            <p className="text-center text-gray-400 font-semibold py-1">Team member: Roman Milata.</p>
+            <h2 className="text-center text-amber-200 font-semibold text-2xl py-6">Under Development</h2>
+            <p className="text-center text-gray-400 font-semibold py-1">Viktor Benedek</p>
             <p className="text-center text-amber-200 font-semibold py-4">You can Sign in right now.</p>
         </div>
         </main>

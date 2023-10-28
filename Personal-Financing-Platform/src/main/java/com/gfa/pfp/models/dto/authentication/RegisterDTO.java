@@ -12,8 +12,8 @@ import java.io.Serializable;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class RegisterDTO implements Serializable {
 
-  String firstname;
-  String lastname;
+  String firstName;
+  String lastName;
   String email;
   String password;
 

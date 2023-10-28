@@ -11,6 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/employee")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class EmployeeController {
 
 
@@ -37,7 +38,7 @@ public class EmployeeController {
         return employeeService.updateEmployee(id, employee);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/{id}/delete")
     public void deleteEmployee(@PathVariable int id){
         employeeService.deleteEmployee(id);
     }

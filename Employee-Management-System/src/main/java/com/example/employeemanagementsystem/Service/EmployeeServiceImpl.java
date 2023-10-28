@@ -3,6 +3,7 @@ package com.example.employeemanagementsystem.Service;
 import com.example.employeemanagementsystem.Model.Employee;
 import com.example.employeemanagementsystem.Repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployee() {
-        return employeeRepository.findAll();
+
+        return employeeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Override

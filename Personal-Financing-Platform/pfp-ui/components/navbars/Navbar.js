@@ -1,5 +1,6 @@
 import React from 'react'
 import SignIn from "../buttons/SignIn";
+import RegisterForm from "../buttons/RegisterForm";
 
 const Navbar = () => {
 
@@ -9,8 +10,12 @@ const Navbar = () => {
                 Personal Financing Platform
             </p>
             <div className="flex px-2">
+                <RegisterForm/>
+            </div>
+            <div className="flex px-2">
                 <SignIn/>
             </div>
+
         </div>
     </div>);
 };

@@ -37,7 +37,7 @@ public class AuthenticationService {
     if (userRepository.findByEmail(request.getEmail()).isPresent()) {
       throw new UserAlreadyExistsException(ExceptionMessage.USER_ALREADY_EXIST.getMessage());
     }
-    var user = User.builder().firstName(request.getFirstname()).lastName(request.getLastname())
+    var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
         .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
         .join(LocalDate.now()).role(RoleType.USER).build();
     userRepository.save(user);

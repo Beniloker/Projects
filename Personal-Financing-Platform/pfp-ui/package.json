@@ -17,7 +17,7 @@
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
     "lint": "^1.1.2",
-    "next": "latest",
+    "next": "^14.0.0",
     "next-app": "^0.0.0",
     "next-auth": "^4.22.1",
     "node": "^20.3.1",
