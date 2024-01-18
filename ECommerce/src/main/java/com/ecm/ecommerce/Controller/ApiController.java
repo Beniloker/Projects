@@ -19,6 +19,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class ApiController {
 
+
     private final UserService userService;
 
     private final AuthenticationService authenticationService;
@@ -27,6 +28,12 @@ public class ApiController {
     public ResponseEntity<AuthenticationResponseDTO> registerUser(@RequestBody RegisterDTO request)
             throws EcException {
         return ResponseEntity.ok(authenticationService.createUser(request));
+    }
+
+    @PostMapping("/serv/register/admin")
+    public ResponseEntity<AuthenticationResponseDTO> registerAdmin(@RequestBody RegisterDTO request)
+            throws EcException {
+        return ResponseEntity.ok(authenticationService.createAdmin(request));
     }
 
     @DeleteMapping("/user/delete/{email}")

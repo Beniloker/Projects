@@ -5,7 +5,7 @@ import com.ecm.ecommerce.Exception.*;
 import com.ecm.ecommerce.Model.DTOs.AuthenticationResponseDTO;
 import com.ecm.ecommerce.Model.DTOs.LoginDTO;
 import com.ecm.ecommerce.Model.DTOs.RegisterDTO;
-import com.ecm.ecommerce.Model.RoleType;
+import com.ecm.ecommerce.Model.Role;
 import com.ecm.ecommerce.Model.User;
 import com.ecm.ecommerce.Repository.UserRepository;
 import com.ecm.ecommerce.Security.Configuration.JwtService;
@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,18 +31,61 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
+//    public AuthenticationResponseDTO createUser(RegisterDTO request) throws EcException {
+//        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+//            throw new UserAlreadyExistsException(ExceptionMessage.USER_ALREADY_EXIST.getMessage());
+//        }
+//        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
+//                .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
+//                .join(LocalDate.now()).role(RoleType.USER).build();
+//        userRepository.save(user);
+//        var jwtToken = jwtService.generateToken(user);
+//        return AuthenticationResponseDTO.builder().token(jwtToken).build();
+//    }
+
     public AuthenticationResponseDTO createUser(RegisterDTO request) throws EcException {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException(ExceptionMessage.USER_ALREADY_EXIST.getMessage());
         }
-        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
-                .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
-                .join(LocalDate.now()).role(RoleType.USER).build();
+
+        // Create a role for the user (assuming the role name is "USER")
+        Role userRole = new Role("USER");
+
+        var user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .join(LocalDate.now())
+                .roles(Set.of(userRole)) // Set the user's role here
+                .build();
+
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 
+    public AuthenticationResponseDTO createAdmin(RegisterDTO request) throws EcException {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException(ExceptionMessage.USER_ALREADY_EXIST.getMessage());
+        }
+
+        // Create a role for the user (assuming the role name is "USER")
+        Role userRole = new Role("ADMIN");
+
+        var user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .join(LocalDate.now())
+                .roles(Set.of(userRole)) // Set the user's role here
+                .build();
+
+        userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponseDTO.builder().token(jwtToken).build();
+    }
     public AuthenticationResponseDTO authenticate(LoginDTO request) throws EcException {
 
         if (request.getEmail().isEmpty()) {
