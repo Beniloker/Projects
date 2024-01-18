@@ -3,7 +3,7 @@ package com.ecm.ecommerce.Service;
 import com.ecm.ecommerce.Exception.EcException;
 import com.ecm.ecommerce.Model.DTOs.AdminGetIdDTO;
 import com.ecm.ecommerce.Model.DTOs.GetEmailDTO;
-import com.ecm.ecommerce.Model.RoleType;
+import com.ecm.ecommerce.Model.Role;
 import com.ecm.ecommerce.Model.User;
 import com.ecm.ecommerce.Model.UserResponseDTO;
 import com.ecm.ecommerce.Repository.UserRepository;
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
         if (user == null) {
             throw new EcException(HttpStatus.NOT_FOUND);
-        } else if (user.getRole() == RoleType.ADMIN) {
+        } else if (user.getRoles().stream().anyMatch(role -> role.getRoleName().equals("ADMIN"))) {
             for (int i = 0; i < userRepository.findAll().size(); i++) {
                 users.add(
                         UserResponseDTO.builder().firstName(userRepository.findAll().get(i).getFirstName())
@@ -92,7 +92,9 @@ public class UserServiceImpl implements UserService {
     public boolean isAdmin(Long userId) throws EcException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EcException(HttpStatus.NOT_FOUND));
-        return user.getRole().equals(RoleType.ADMIN);
+        Role userRole = user.getRoles().stream().filter(role -> role.getRoleName().equals("ADMIN"))
+                .findFirst().orElse(null);
+        return userRole != null;
     }
 
     @Override

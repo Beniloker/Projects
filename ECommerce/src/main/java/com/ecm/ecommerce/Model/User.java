@@ -1,6 +1,8 @@
 package com.ecm.ecommerce.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,8 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Builder
@@ -24,14 +25,18 @@ public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    Long id;
+    @Column(name = "user_id", nullable = false)
+    Long Id;
 
     @Column(name = "firstname", nullable = false)
     String firstName;
 
     @Column(name = "lastname", nullable = false)
     String lastName;
+
+    @Size(min = 10, max = 10, message = "Mobile Number must be exactly 10 digits long")
+    @Pattern(regexp = "^\\d{10}$", message = "Mobile Number must contain only Numbers")
+    private String mobileNumber;
 
     @Column(name = "email", nullable = false)
     String email;
@@ -43,23 +48,32 @@ public class User implements Serializable, UserDetails {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate join;
 
-    @Enumerated(EnumType.STRING)
-    RoleType role;
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
+
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "user_address", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<Address> addresses = new ArrayList<>();
 
     public User(String firstName, String lastName, String email, String password, LocalDate joinDate,
-                String role) {
+                Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.join = joinDate;
-        this.role = RoleType.valueOf(role);
+        this.roles.add(role);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : this.roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+        return authorities;
     }
 
     @Override
